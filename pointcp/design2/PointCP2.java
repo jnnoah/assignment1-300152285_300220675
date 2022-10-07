@@ -83,17 +83,6 @@ public class PointCP2
   
 	
   /**
-   * Converts Cartesian coordinates to Polar coordinates.
-   */
-  // public void convertStorageToPolar()
-  // {
-  //   //Calculate RHO and THETA
-  //   double temp = getRho();
-  //   theta = getTheta();
-  //   rzho = temp;
-  // }
-	
-  /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
   public void computeCartesian()
