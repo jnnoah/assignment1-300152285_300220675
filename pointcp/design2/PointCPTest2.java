@@ -64,7 +64,7 @@ public class PointCPTest
       }
     }
     System.out.println("\nYou entered:\n" + point);
-    point.convertToCartesian();
+    point.computeCartesian();
     System.out.println("\nAfter asking to convert to Cartesian:\n" + point);
     point.convertStorageToPolar();
     System.out.println("\nAfter asking to store as Polar:\n" + point);
