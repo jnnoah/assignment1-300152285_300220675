@@ -15,12 +15,6 @@
 public class PointCP2
 {
   //Instance variables ************************************************
-
-  /**
-   * Contains C(artesian) or P(olar) to identify the type of
-   * coordinates that are being dealt with.
-   */
-  private char typeCoord;
   
   /**
    * Contains the current value of X or RHO depending on the type
@@ -33,6 +27,11 @@ public class PointCP2
    * type of coordinates.
    */
   private double theta;
+
+ /**
+  * Contains (C)Cartesian is the initual type is not P(Polar).
+  */
+  private char initualType;
 	
   
   //Constructors ******************************************************
@@ -47,12 +46,13 @@ public class PointCP2
 
     if(type == 'C')
     {
-      convertStorageToPolar();
+      this.rho = Math.sqrt(Math.pow(xOrRho, 2) + Math.pow(yOrTheta, 2));
+      this.theta = Math.toDegrees(Math.atan2(theta, rho));
+      initualType = 'C';
     }
     
     this.rho = rho;
     this.theta = theta;
-    typeCoord = type;
   }
 	
   
@@ -71,46 +71,32 @@ public class PointCP2
   
   public double getRho()
   {
-    if(typeCoord == 'P') 
-      return xOrRho;
-    else 
-      return (Math.sqrt(Math.pow(xOrRho, 2) + Math.pow(yOrTheta, 2)));
+    return rho;
   }
   
   public double getTheta()
   {
-    if(typeCoord == 'P')
-      return theta;
-    else 
-      return Math.toDegrees(Math.atan2(theta, rho));
+    return theta;
   }
   
 	
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
-  public void convertStorageToPolar()
-  {
-    if(typeCoord != 'P')
-    {
-      //Calculate RHO and THETA
-      double temp = getRho();
-      theta = getTheta();
-      rzho = temp;
-      
-      typeCoord = 'P';  //Change coord type identifier
-    }
-  }
+  // public void convertStorageToPolar()
+  // {
+  //   //Calculate RHO and THETA
+  //   double temp = getRho();
+  //   theta = getTheta();
+  //   rzho = temp;
+  // }
 	
   /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
-  public void convertToCartesian()
+  public void computeCartesian()
   {
-    //Calculate X and Y
-    double temp = getX();
-    yOrTheta = getY();
-    xOrRho = temp;
+    initualType = 'C';
   }
 
   /**
@@ -157,6 +143,12 @@ public class PointCP2
    */
   public String toString()
   {
-    return "Stored as Polar [" + getRho() + "," + getTheta() + "]" + "\n";
+    String resutl = "Stored as " + (initualType == 'C' 
+    ? "Cartesian  (" + getX() + "," + getY() + ")"
+    : "Polar [" + getRho() + "," + getTheta() + "]") + "\n";
+    
+    initualType = ' ';
+    
+    return result;
   }
 }
