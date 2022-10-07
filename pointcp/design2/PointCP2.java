@@ -12,7 +12,7 @@
  * @author Dr Timothy C. Lethbridge
  * @version July 2000
  */
-public class PointCP
+public class PointCP2
 {
   //Instance variables ************************************************
 
@@ -26,13 +26,13 @@ public class PointCP
    * Contains the current value of X or RHO depending on the type
    * of coordinates.
    */
-  private double xOrRho;
+  private double rho;
   
   /**
    * Contains the current value of Y or THETA value depending on the
    * type of coordinates.
    */
-  private double yOrTheta;
+  private double theta;
 	
   
   //Constructors ******************************************************
@@ -40,12 +40,18 @@ public class PointCP
   /**
    * Constructs a coordinate object, with a type identifier.
    */
-  public PointCP(char type, double xOrRho, double yOrTheta)
+  public PointCP(char type, double rho, double theta)
   {
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
-    this.xOrRho = xOrRho;
-    this.yOrTheta = yOrTheta;
+
+    if(type == 'C')
+    {
+      convertStorageToPolar();
+    }
+    
+    this.rho = rho;
+    this.theta = theta;
     typeCoord = type;
   }
 	
@@ -55,22 +61,28 @@ public class PointCP
  
   public double getX()
   {
-    return (Math.cos(Math.toRadians(yOrTheta)) * xOrRho);
+    return (Math.cos(Math.toRadians(theta)) * rho);
   }
   
   public double getY()
   {
-    return (Math.sin(Math.toRadians(yOrTheta)) * xOrRho);
+    return (Math.sin(Math.toRadians(theta)) * rho);
   }
   
   public double getRho()
   {
-    return xOrRho;
+    if(typeCoord == 'P') 
+      return xOrRho;
+    else 
+      return (Math.sqrt(Math.pow(xOrRho, 2) + Math.pow(yOrTheta, 2)));
   }
   
   public double getTheta()
   {
-    return yOrTheta;
+    if(typeCoord == 'P')
+      return theta;
+    else 
+      return Math.toDegrees(Math.atan2(theta, rho));
   }
   
 	
@@ -83,8 +95,8 @@ public class PointCP
     {
       //Calculate RHO and THETA
       double temp = getRho();
-      yOrTheta = getTheta();
-      xOrRho = temp;
+      theta = getTheta();
+      rzho = temp;
       
       typeCoord = 'P';  //Change coord type identifier
     }
@@ -93,17 +105,12 @@ public class PointCP
   /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
-  public void convertStorageToCartesian()
+  public void convertToCartesian()
   {
-    if(typeCoord != 'C')
-    {
-      //Calculate X and Y
-      double temp = getX();
-      yOrTheta = getY();
-      xOrRho = temp;
-   
-      typeCoord = 'C';	//Change coord type identifier
-    }
+    //Calculate X and Y
+    double temp = getX();
+    yOrTheta = getY();
+    xOrRho = temp;
   }
 
   /**
@@ -150,8 +157,6 @@ public class PointCP
    */
   public String toString()
   {
-    return "Stored as " + (typeCoord == 'C' 
-       ? "Cartesian  (" + getX() + "," + getY() + ")"
-       : "Polar [" + getRho() + "," + getTheta() + "]") + "\n";
+    return "Stored as Polar [" + getRho() + "," + getTheta() + "]" + "\n";
   }
 }
