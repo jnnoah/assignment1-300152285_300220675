@@ -12,28 +12,22 @@
  * @author Dr Timothy C. Lethbridge
  * @version July 2000
  */
+<<<<<<< HEAD
+public abstract class PointCP5
+=======
 public class PointCP5
+>>>>>>> 0903159465f708a6a23bb20e75513ef2f82f5ecd
 {
-  //Instance variables ************************************************
-
-  /**
-   * Contains C(artesian) or P(olar) to identify the type of
-   * coordinates that are being dealt with.
-   */
-  private char typeCoord;
-  
-  /**
-   * Contains the current value of X or RHO depending on the type
-   * of coordinates.
-   */
-  private double xOrRho;
-  
-  /**
-   * Contains the current value of Y or THETA value depending on the
-   * type of coordinates.
-   */
-  private double yOrTheta;
+  abstract double getX();
+  abstract double getY();
+  abstract double getRho();
+  abstract double getTheta();
+  abstract void computeCartesian();
+  abstract double getDistance(PointCP2 pointB);
+  abstract PointCP2 rotatePoint(double rotation);
 	
+<<<<<<< HEAD
+=======
   
   //Constructors ******************************************************
 
@@ -166,4 +160,5 @@ public class PointCP5
        ? "Cartesian  (" + getX() + "," + getY() + ")"
        : "Polar [" + getRho() + "," + getTheta() + "]") + "\n";
   }
+>>>>>>> 0903159465f708a6a23bb20e75513ef2f82f5ecd
 }
