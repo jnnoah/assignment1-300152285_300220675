@@ -75,40 +75,6 @@ public class PointCP3
     return Math.toDegrees(Math.atan2(y, x));
   }
   
-	// ******* 
-  // Commented because design only requires to store 
-
-  // /**
-  //  * Converts Cartesian coordinates to Polar coordinates.
-  //  */
-  // public void convertStorageToPolar()
-  // {
-  //   if(typeCoord != 'P')
-  //   {
-  //     //Calculate RHO and THETA
-  //     double temp = getRho();
-  //     y = getTheta();
-  //     x = temp;
-      
-  //     typeCoord = 'P';  //Change coord type identifier
-  //   }
-  // }
-	
-  // /**
-  //  * Converts Polar coordinates to Cartesian coordinates.
-  //  */
-  // public void convertStorageToCartesian()
-  // {
-  //   if(typeCoord != 'C')
-  //   {
-  //     //Calculate X and Y
-  //     double temp = getX();
-  //     y = getY();
-  //     x = temp;
-   
-  //     typeCoord = 'C';	//Change coord type identifier
-  //   }
-  // }
 
   /**
    * Calculates the distance in between two points using the Pythagorean
