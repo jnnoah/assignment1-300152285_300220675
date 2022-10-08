@@ -12,7 +12,7 @@
  * @author Dr Timothy C. Lethbridge
  * @version July 2000
  */
-public class PointCP2
+public class PointCP2 extends PointCP5
 {
   //Instance variables ************************************************
   
@@ -83,7 +83,7 @@ public class PointCP2
   
 	
   /**
-   * Converts Polar coordinates to Cartesian coordinates.
+   * Assign value to the initual type when prompted to compute Cartesian.
    */
   public void computeCartesian()
   {
