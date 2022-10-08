@@ -3,6 +3,7 @@
 // license found at http://www.site.uottawa.ca/school/research/lloseng/
 
 import java.io.*;
+import java.util.Random;
 
 /**
  * This class prompts the user for a set of coordinates, and then 
@@ -35,6 +36,7 @@ public class PointCPTest3
   {
     PointCP3 point;
 
+    System.out.println();
     System.out.println("Cartesian-Polar Coordinates Conversion Program");
 
     // Check if the user input coordinates from the command line
@@ -63,6 +65,90 @@ public class PointCPTest3
         return;
       }
     }
+
+    long n = 100000000;
+    double rangeMin = -100000.0;
+    double rangeMax = 100000.0;
+
+    double rangeMinRotation = 0.0;
+    double rangeMaxRotation = 360.0;
+    Random r = new Random();
+
+    long maxTimeCreateObject, maxTimeGetX, maxTimeGetY, maxTimeGetRho, maxTimeGetTheta, maxTimeGetDistance, maxTimeRotatePoint;
+    maxTimeCreateObject = maxTimeGetX = maxTimeGetY = maxTimeGetRho = maxTimeGetTheta = maxTimeGetDistance = maxTimeRotatePoint = 0;
+
+    // Cartesian test with random values
+    for (int i=0; i<n; i++){
+      double randomValueX = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      double randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      
+      long startTime = System.nanoTime();
+      PointCP3 testPoint = new PointCP3('C', randomValueX, randomValueY);
+      long endTime = System.nanoTime();
+      long duration = (endTime - startTime);  
+      if (maxTimeCreateObject < duration) { maxTimeCreateObject = duration;} 
+
+      startTime = System.nanoTime();
+      testPoint.getX();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetX < duration) { maxTimeGetX = duration;} 
+
+      startTime = System.nanoTime();
+      testPoint.getY();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetY < duration) { maxTimeGetY = duration;} 
+
+      startTime = System.nanoTime();
+      testPoint.getRho();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetRho < duration) { maxTimeGetRho = duration;} 
+
+      startTime = System.nanoTime();
+      testPoint.getTheta();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetTheta < duration) { maxTimeGetTheta = duration;} 
+
+      randomValueX = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      PointCP3 testPointDistance = new PointCP3('C', randomValueX, randomValueY);
+      startTime = System.nanoTime();
+      testPoint.getDistance(testPointDistance);
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetDistance < duration) { maxTimeGetDistance = duration;} 
+
+      double randomRotation = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
+      startTime = System.nanoTime();
+      testPoint.rotatePoint(randomRotation);
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeRotatePoint < duration) { maxTimeRotatePoint = duration;} 
+
+    }
+    System.out.println();
+    System.out.println("********************************************************************");
+    System.out.println();
+    System.out.println("Testing PointCP3");
+    System.out.println();
+    System.out.println("Doing " + n + " tests" );
+    System.out.println("Random X values generated between: " + rangeMin + " and " + rangeMax);
+    System.out.println("Random Y values generated between: " + rangeMin + " and " + rangeMax);
+    System.out.println();
+    System.out.println("********************************************************************");
+    System.out.println();
+    System.out.println("Worst case scenario to create object: " + maxTimeCreateObject + " ms");
+    System.out.println("Worst case scenario to getX(): " + maxTimeGetX + " ms");
+    System.out.println("Worst case scenario to getY(): " + maxTimeGetY + " ms");
+    System.out.println("Worst case scenario to getRho(): " + maxTimeGetRho + " ms");
+    System.out.println("Worst case scenario to getTheta(): " + maxTimeGetTheta + " ms");
+    System.out.println("Worst case scenario to getDistance(): " + maxTimeGetDistance + " ms");
+    System.out.println("Worst case scenario to rotatePoint(): " + maxTimeRotatePoint + " ms");
+    System.out.println();
+    System.out.println("********************************************************************");
   }
 
   /**
