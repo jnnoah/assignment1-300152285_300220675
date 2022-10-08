@@ -5,9 +5,9 @@
 Fall 2022 - University of Ottawa
 
 
-Professor:  Wassim El Ahmar
-Student 1:  Noah Ndahirwa (300152285)
-Student 2: 	Steven Wilson (300220675)
+Professor:  Wassim El Ahmar <br>
+Student 1:  Noah Ndahirwa (300152285)<br>
+Student 2: 	Steven Wilson (300220675)<br>
 
 Group 55
 
