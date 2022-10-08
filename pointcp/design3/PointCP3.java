@@ -20,20 +20,20 @@ public class PointCP3
    * Contains C(artesian) or P(olar) to identify the type of
    * coordinates that are being dealt with.
    */
-  private char typeCoord;
+  private char typeCoord = 'C';
   
   /**
    * Contains the current value of X or RHO depending on the type
    * of coordinates.
    */
-  private double xOrRho;
+  private double x;
   
   /**
    * Contains the current value of Y or THETA value depending on the
    * type of coordinates.
    */
-  private double yOrTheta;
-	
+  private double y;
+  
   
   //Constructors ******************************************************
 
@@ -44,79 +44,71 @@ public class PointCP3
   {
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
-    this.xOrRho = xOrRho;
-    this.yOrTheta = yOrTheta;
-    typeCoord = type;
+    
+    // x = r × cos( θ ) y = r × sin( θ )
+    if (type == 'P'){
+      this.x = xOrRho * Math.cos(yOrTheta);
+      this.y = xOrRho * Math.sin(yOrTheta);
+      typeCoord = 'C';
+    } else {
+      this.x = xOrRho;
+      this.y = yOrTheta;
+    }
+
   }
-	
+
   
   //Instance methods **************************************************
  
  
-  public double getX()
-  {
-    if(typeCoord == 'C') 
-      return xOrRho;
-    else 
-      return (Math.cos(Math.toRadians(yOrTheta)) * xOrRho);
-  }
+  public double getX(){ return x;}
   
-  public double getY()
-  {
-    if(typeCoord == 'C') 
-      return yOrTheta;
-    else 
-      return (Math.sin(Math.toRadians(yOrTheta)) * xOrRho);
-  }
+  public double getY(){ return y;}
   
   public double getRho()
   {
-    if(typeCoord == 'P') 
-      return xOrRho;
-    else 
-      return (Math.sqrt(Math.pow(xOrRho, 2) + Math.pow(yOrTheta, 2)));
+    return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
   }
   
   public double getTheta()
   {
-    if(typeCoord == 'P')
-      return yOrTheta;
-    else 
-      return Math.toDegrees(Math.atan2(yOrTheta, xOrRho));
+    return Math.toDegrees(Math.atan2(y, x));
   }
   
-	
-  /**
-   * Converts Cartesian coordinates to Polar coordinates.
-   */
-  public void convertStorageToPolar()
-  {
-    if(typeCoord != 'P')
-    {
-      //Calculate RHO and THETA
-      double temp = getRho();
-      yOrTheta = getTheta();
-      xOrRho = temp;
+	// ******* 
+  // Commented because design only requires to store 
+
+  // /**
+  //  * Converts Cartesian coordinates to Polar coordinates.
+  //  */
+  // public void convertStorageToPolar()
+  // {
+  //   if(typeCoord != 'P')
+  //   {
+  //     //Calculate RHO and THETA
+  //     double temp = getRho();
+  //     y = getTheta();
+  //     x = temp;
       
-      typeCoord = 'P';  //Change coord type identifier
-    }
-  }
+  //     typeCoord = 'P';  //Change coord type identifier
+  //   }
+  // }
 	
-  /**
-   * Converts Polar coordinates to Cartesian coordinates.
-   */
-  public void convertStorageToCartesian()
-  {
-    if(typeCoord != 'C')
-    {
-      //Calculate X and Y
-      double temp = getX();
-      yOrTheta = getY();
-      xOrRho = temp;
+  // /**
+  //  * Converts Polar coordinates to Cartesian coordinates.
+  //  */
+  // public void convertStorageToCartesian()
+  // {
+  //   if(typeCoord != 'C')
+  //   {
+  //     //Calculate X and Y
+  //     double temp = getX();
+  //     y = getY();
+  //     x = temp;
    
-      typeCoord = 'C';	//Change coord type identifier
-    }
-  }
+  //     typeCoord = 'C';	//Change coord type identifier
+  //   }
+  // }
 
   /**
    * Calculates the distance in between two points using the Pythagorean
