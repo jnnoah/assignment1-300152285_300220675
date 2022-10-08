@@ -49,7 +49,7 @@ public class PointCP
     typeCoord = type;
   }
 	
-  
+	
   //Instance methods **************************************************
  
  
