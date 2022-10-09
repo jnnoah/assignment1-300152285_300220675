@@ -14,7 +14,7 @@ import java.util.Random;
  * @author Paul Holden
  * @version July 2000
  */
-public class PointCPTest3
+public class PointCPTest3 
 {
   //Class methods *****************************************************
 
@@ -123,7 +123,7 @@ public class PointCPTest3
 
       randomValueX = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
       randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-      PointCP3 testPointDistance = new PointCP3('C', randomValueX, randomValueY);
+      PointCP2 testPointDistance = new PointCP2('C', randomValueX, randomValueY);
       startTime = System.nanoTime();
       testPoint.getDistance(testPointDistance);
       endTime = System.nanoTime();
@@ -192,7 +192,7 @@ public class PointCPTest3
 
       randomValueR = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
       randomValueTheta = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
-      PointCP3 testPointDistance = new PointCP3('P', randomValueR, randomValueTheta);
+      PointCP2 testPointDistance = new PointCP2('P', randomValueR, randomValueTheta);
       startTime = System.nanoTime();
       testPoint.getDistance(testPointDistance);
       endTime = System.nanoTime();
