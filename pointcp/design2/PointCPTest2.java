@@ -3,6 +3,7 @@
 // license found at http://www.site.uottawa.ca/school/research/lloseng/
 
 import java.io.*;
+import java.util.Random;
 
 /**
  * This class prompts the user for a set of coordinates, and then 
@@ -63,14 +64,230 @@ public class PointCPTest2
         return;
       }
     }
-    System.out.println("\nYou entered:\n" + point);
-    point.computeCartesian();
-    System.out.println("\nAfter asking to convert to Cartesian:\n" + point);
-    System.out.println("\nWhat was stored as Polar:\n" + point);
-    point.computeCartesian();
-    System.out.println("\nAfter asking to convert to Cartesian again:\n" + point);
+    long n = 500;
+    double rangeMin = -100000.0;
+    double rangeMax = 100000.0;
+
+    double rangeMinRotation = 0.0;
+    double rangeMaxRotation = 360.0;
+    Random r = new Random();
+
+    long maxTimeCreateObject, maxTimeGetX, maxTimeGetY, maxTimeGetRho, maxTimeGetTheta, maxTimeGetDistance, maxTimeRotatePoint;
+    maxTimeCreateObject = maxTimeGetX = maxTimeGetY = maxTimeGetRho = maxTimeGetTheta = maxTimeGetDistance = maxTimeRotatePoint = 0;
+
+    long minTimeCreateObject, minTimeGetX, minTimeGetY, minTimeGetRho, minTimeGetTheta, minTimeGetDistance, minTimeRotatePoint;
+    minTimeCreateObject = minTimeGetX = minTimeGetY = minTimeGetRho = minTimeGetTheta = minTimeGetDistance = minTimeRotatePoint = 1000000000; 
+
+    // Cartesian test with random values (X, Y)
+    for (int i=0; i<n; i++){
+      double randomValueX = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      double randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      
+      long startTime = System.nanoTime();
+      PointCP2 testPoint = new PointCP2('C', randomValueX, randomValueY);
+      long endTime = System.nanoTime();
+      long duration = (endTime - startTime);
+      if (maxTimeCreateObject < duration) { maxTimeCreateObject = duration;} 
+      if (minTimeCreateObject > duration) { if (duration>0) {minTimeCreateObject = duration;}} 
+      
+      startTime = System.nanoTime();
+      testPoint.getX();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime); 
+      if (maxTimeGetX < duration) { maxTimeGetX = duration;} 
+      if (minTimeGetX > duration) { if(duration>0) {minTimeGetX = duration;}} 
+      
+
+      startTime = System.nanoTime();
+      testPoint.getY();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetY < duration) { maxTimeGetY = duration;} 
+      if (minTimeGetY > duration) { if(duration>0) {minTimeGetY = duration;} }
+
+      startTime = System.nanoTime();
+      testPoint.getRho();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetRho < duration) { maxTimeGetRho = duration;} 
+      if (minTimeGetRho > duration) { if(duration>0){minTimeGetRho = duration;} }
+
+      startTime = System.nanoTime();
+      testPoint.getTheta();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetTheta < duration) { maxTimeGetTheta = duration;} 
+      if (minTimeGetTheta > duration) { if(duration>0){minTimeGetTheta = duration;}}
+
+      randomValueX = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      PointCP2 testPointDistance = new PointCP2('C', randomValueX, randomValueY);
+      startTime = System.nanoTime();
+      testPoint.getDistance(testPointDistance);
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetDistance < duration) { maxTimeGetDistance = duration;} 
+      if (minTimeGetDistance > duration) { if(duration>0){minTimeGetDistance = duration;} }
+
+      double randomRotation = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
+      startTime = System.nanoTime();
+      testPoint.rotatePoint(randomRotation);
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeRotatePoint < duration) { maxTimeRotatePoint = duration;} 
+      if (minTimeRotatePoint > duration) { if(duration>0){minTimeRotatePoint = duration;}} 
+
+    }
+
+    // Cartesian test with random values (r, Theta)
+    long maxTimeCreateObjectPolar, maxTimeGetXPolar, maxTimeGetYPolar, maxTimeGetRhoPolar, maxTimeGetThetaPolar, maxTimeGetDistancePolar, maxTimeRotatePointPolar;
+    maxTimeCreateObjectPolar = maxTimeGetXPolar = maxTimeGetYPolar = maxTimeGetRhoPolar = maxTimeGetThetaPolar = maxTimeGetDistancePolar = maxTimeRotatePointPolar = 0;
+
+    long minTimeCreateObjectPolar, minTimeGetXPolar, minTimeGetYPolar, minTimeGetRhoPolar, minTimeGetThetaPolar, minTimeGetDistancePolar, minTimeRotatePointPolar;
+    minTimeCreateObjectPolar = minTimeGetXPolar = minTimeGetYPolar = minTimeGetRhoPolar = minTimeGetThetaPolar = minTimeGetDistancePolar = minTimeRotatePointPolar = 1000000000; 
+
+    // Cartesian test with random values
+    for (int i=0; i<n; i++){
+      double randomValueR = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      double randomValueTheta = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
+      
+      long startTime = System.nanoTime();
+      PointCP2 testPoint = new PointCP2('P', randomValueR, randomValueTheta);
+      long endTime = System.nanoTime();
+      long duration = (endTime - startTime);  
+      if (maxTimeCreateObjectPolar < duration) { maxTimeCreateObjectPolar = duration;} 
+      if (minTimeCreateObjectPolar > duration) { if(duration>0){minTimeCreateObjectPolar = duration;}} 
+
+      startTime = System.nanoTime();
+      testPoint.getX();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetXPolar < duration) { maxTimeGetXPolar = duration;}
+      if (minTimeGetXPolar > duration) { if(duration>0){minTimeGetXPolar = duration;}} 
+ 
+
+      startTime = System.nanoTime();
+      testPoint.getY();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetYPolar < duration) { maxTimeGetYPolar = duration;}
+      if (minTimeGetYPolar > duration) { if(duration>0){minTimeGetYPolar = duration;}} 
+  
+
+      startTime = System.nanoTime();
+      testPoint.getRho();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetRhoPolar < duration) { maxTimeGetRhoPolar = duration;}
+      if (minTimeGetRhoPolar > duration) { if(duration>0){minTimeGetRhoPolar = duration;}}
+
+      startTime = System.nanoTime();
+      testPoint.getTheta();
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetThetaPolar < duration) { maxTimeGetThetaPolar = duration;}
+      if (minTimeGetThetaPolar > duration) { if(duration>0){minTimeGetThetaPolar = duration;}}
+
+      randomValueR = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+      randomValueTheta = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
+      PointCP2 testPointDistance = new PointCP2('P', randomValueR, randomValueTheta);
+      startTime = System.nanoTime();
+      testPoint.getDistance(testPointDistance);
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeGetDistancePolar < duration) { maxTimeGetDistancePolar = duration;} 
+      if (minTimeGetDistancePolar > duration) { if(duration>0){minTimeGetDistancePolar = duration;}}
+
+      double randomRotation = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
+      startTime = System.nanoTime();
+      testPoint.rotatePoint(randomRotation);
+      endTime = System.nanoTime();
+      duration = (endTime - startTime);  
+      if (maxTimeRotatePointPolar < duration) { maxTimeRotatePointPolar = duration;} 
+      if (minTimeRotatePointPolar > duration) { if(duration>0){minTimeRotatePointPolar = duration;}}
+
+
+    }
+    System.out.println();
+    System.out.println("********************************************************************");
+    System.out.println();
+    System.out.println("Testing PointCP2");
+    System.out.println();
+    System.out.println("Doing " + n + " tests" );
+    System.out.println("Random X values generated between: " + rangeMin + " and " + rangeMax);
+    System.out.println("Random Y values generated between: " + rangeMin + " and " + rangeMax);
+    System.out.println();
+    System.out.println("Random R values generated between: " + rangeMin + " and " + rangeMax);
+    System.out.println("Random Theta values generated between: " + rangeMinRotation + " and " + rangeMaxRotation);
+    System.out.println();
+    System.out.println("********************************************************************");
+    System.out.println();
+    System.out.println("With Cartesian Inputs");
+    System.out.println();
+    System.out.println("Create Object");
+    System.out.println("Worst Case: " + maxTimeCreateObject + " ns");
+    System.out.println("Best Case: " + minTimeCreateObject + " ns");
+    System.out.println();
+    System.out.println("getX()");
+    System.out.println("Worst case: " + maxTimeGetX + " ns");
+    System.out.println("Best case: " + minTimeGetX + " ns");
+    System.out.println();
+    System.out.println("getY()");
+    System.out.println("Worst case: " + maxTimeGetY + " ns");
+    System.out.println("Best case: " + minTimeGetY + " ns");
+    System.out.println();
+    System.out.println("getRho()");
+    System.out.println("Worst case: " + maxTimeGetRho + " ns");
+    System.out.println("Best case: " + minTimeGetRho + " ns");
+    System.out.println();
+    System.out.println("getTheta()");
+    System.out.println("Worst case: " + maxTimeGetTheta + " ns");
+    System.out.println("Best case: " + minTimeGetTheta + " ns");
+    System.out.println();
+    System.out.println("getDistance()");
+    System.out.println("Worst case: " + maxTimeGetDistance + " ns");
+    System.out.println("Best case: " + minTimeGetDistance + " ns");
+    System.out.println();
+    System.out.println("rotatePoint()");
+    System.out.println("Worst case: " + maxTimeRotatePoint + " ns");
+    System.out.println("Best case: " + minTimeRotatePoint + " ns");
+    System.out.println();
+    System.out.println("********************************************************************");
+    System.out.println();
+    System.out.println("With Polar Inputs");
+    System.out.println();
+    System.out.println("Create Object");
+    System.out.println("Worst Case: " + maxTimeCreateObjectPolar + " ns");
+    System.out.println("Best Case: " + minTimeCreateObjectPolar + " ns");
+    System.out.println();
+    System.out.println("getX()");
+    System.out.println("Worst case: " + maxTimeGetXPolar + " ns");
+    System.out.println("Best case: " + minTimeGetXPolar + " ns");
+    System.out.println();
+    System.out.println("getY()");
+    System.out.println("Worst case: " + maxTimeGetYPolar + " ns");
+    System.out.println("Best case: " + minTimeGetYPolar + " ns");
+    System.out.println();
+    System.out.println("getRho()");
+    System.out.println("Worst case: " + maxTimeGetRhoPolar + " ns");
+    System.out.println("Best case: " + minTimeGetRhoPolar + " ns");
+    System.out.println();
+    System.out.println("getTheta()");
+    System.out.println("Worst case: " + maxTimeGetThetaPolar + " ns");
+    System.out.println("Best case: " + minTimeGetThetaPolar + " ns");
+    System.out.println();
+    System.out.println("getDistance()");
+    System.out.println("Worst case: " + maxTimeGetDistancePolar + " ns");
+    System.out.println("Best case: " + minTimeGetDistancePolar + " ns");
+    System.out.println();
+    System.out.println("rotatePoint()");
+    System.out.println("Worst case: " + maxTimeRotatePointPolar + " ns");
+    System.out.println("Best case: " + minTimeRotatePointPolar + " ns");
+    System.out.println();
+    System.out.println("********************************************************************");
   }
 
+  
   /**
    * This method obtains input from the user and verifies that
    * it is valid.  When the input is valid, it returns a PointCP
