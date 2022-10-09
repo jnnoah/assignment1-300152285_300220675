@@ -12,7 +12,7 @@
  * @author Dr Timothy C. Lethbridge
  * @version July 2000
  */
-public class PointCP3
+public class PointCP3 extends PointCP5
 {
   //Instance variables ************************************************
 
@@ -74,6 +74,8 @@ public class PointCP3
   {
     return Math.toDegrees(Math.atan2(y, x));
   }
+
+  public void computeCartesian(){}
   
 
   /**
@@ -84,6 +86,16 @@ public class PointCP3
    * @param pointB The second point.
    * @return The distance between the two points.
    */
+  public double getDistance(PointCP2 pointB)
+  {
+    // Obtain differences in X and Y, sign is not important as these values
+    // will be squared later.
+    double deltaX = getX() - pointB.getX();
+    double deltaY = getY() - pointB.getY();
+    
+    return Math.sqrt((Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
+  }
+
   public double getDistance(PointCP3 pointB)
   {
     // Obtain differences in X and Y, sign is not important as these values
@@ -102,7 +114,18 @@ public class PointCP3
    * @param rotation The number of degrees to rotate the point.
    * @return The rotated image of the original point.
    */
-  public PointCP3 rotatePoint(double rotation)
+  public PointCP2 rotatePoint(double rotation)
+  {
+    double radRotation = Math.toRadians(rotation);
+    double X = getX();
+    double Y = getY();
+        
+    return new PointCP2('C',
+      (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
+      (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y));
+  }
+
+  public PointCP3 rotatePointCartesian(double rotation)
   {
     double radRotation = Math.toRadians(rotation);
     double X = getX();
