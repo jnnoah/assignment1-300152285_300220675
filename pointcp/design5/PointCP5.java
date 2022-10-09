@@ -20,6 +20,8 @@ public abstract class PointCP5
   abstract double getTheta();
   abstract void computeCartesian();
   abstract double getDistance(PointCP2 pointB);
+  abstract double getDistance(PointCP3 pointB);
   abstract PointCP2 rotatePoint(double rotation);
-	
+  abstract PointCP3 rotatePointCartesian(double rotation);
+
 }
