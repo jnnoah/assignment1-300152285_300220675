@@ -14,7 +14,7 @@ import java.util.Random;
  * @author Paul Holden
  * @version July 2000
  */
-public class PointCPTest
+public class PointCPTest5 
 {
   //Class methods *****************************************************
 
@@ -34,8 +34,9 @@ public class PointCPTest
    */
   public static void main(String[] args)
   {
-    PointCP point;
+    PointCP3 point;
 
+    System.out.println();
     System.out.println("Cartesian-Polar Coordinates Conversion Program");
 
     // Check if the user input coordinates from the command line
@@ -43,7 +44,7 @@ public class PointCPTest
     // If he did not, prompt the user for them.
     try
     {
-      point = new PointCP(args[0].toUpperCase().charAt(0), 
+      point = new PointCP3(args[0].toUpperCase().charAt(0), 
         Double.valueOf(args[1]).doubleValue(), 
         Double.valueOf(args[2]).doubleValue());
     }
@@ -85,7 +86,7 @@ public class PointCPTest
       double randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
       
       long startTime = System.nanoTime();
-      PointCP testPoint = new PointCP('C', randomValueX, randomValueY);
+      PointCP3 testPoint = new PointCP3('C', randomValueX, randomValueY);
       long endTime = System.nanoTime();
       long duration = (endTime - startTime);
       if (maxTimeCreateObject < duration) { maxTimeCreateObject = duration;} 
@@ -122,7 +123,7 @@ public class PointCPTest
 
       randomValueX = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
       randomValueY = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-      PointCP testPointDistance = new PointCP('C', randomValueX, randomValueY);
+      PointCP2 testPointDistance = new PointCP2('C', randomValueX, randomValueY);
       startTime = System.nanoTime();
       testPoint.getDistance(testPointDistance);
       endTime = System.nanoTime();
@@ -153,7 +154,7 @@ public class PointCPTest
       double randomValueTheta = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
       
       long startTime = System.nanoTime();
-      PointCP testPoint = new PointCP('P', randomValueR, randomValueTheta);
+      PointCP3 testPoint = new PointCP3('P', randomValueR, randomValueTheta);
       long endTime = System.nanoTime();
       long duration = (endTime - startTime);  
       if (maxTimeCreateObjectPolar < duration) { maxTimeCreateObjectPolar = duration;} 
@@ -191,7 +192,7 @@ public class PointCPTest
 
       randomValueR = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
       randomValueTheta = rangeMinRotation + (rangeMaxRotation - rangeMinRotation) * r.nextDouble();
-      PointCP testPointDistance = new PointCP('P', randomValueR, randomValueTheta);
+      PointCP2 testPointDistance = new PointCP2('P', randomValueR, randomValueTheta);
       startTime = System.nanoTime();
       testPoint.getDistance(testPointDistance);
       endTime = System.nanoTime();
@@ -212,7 +213,7 @@ public class PointCPTest
     System.out.println();
     System.out.println("********************************************************************");
     System.out.println();
-    System.out.println("Testing PointCP");
+    System.out.println("Testing PointCP5");
     System.out.println();
     System.out.println("Doing " + n + " tests" );
     System.out.println("Random X values generated between: " + rangeMin + " and " + rangeMax);
@@ -286,12 +287,6 @@ public class PointCPTest
     System.out.println("Best case: " + minTimeRotatePointPolar + " ns");
     System.out.println();
     System.out.println("********************************************************************");
-
-    System.out.println("\nYou entered:\n" + point);
-    point.convertStorageToCartesian();
-    System.out.println("\nAfter asking to store as Cartesian:\n" + point);
-    point.convertStorageToPolar();
-    System.out.println("\nAfter asking to store as Polar:\n" + point);
   }
 
   /**
@@ -304,7 +299,7 @@ public class PointCPTest
    * @throws IOException If there is an error getting input from
    *         the user.
    */
-  private static PointCP getInput() throws IOException
+  private static PointCP3 getInput() throws IOException
   {
     byte[] buffer = new byte[1024];  //Buffer to hold byte input
     boolean isOK = false;  // Flag set if input correct
@@ -382,6 +377,6 @@ public class PointCPTest
       isOK = false;
     }
     //Return a new PointCP object
-    return (new PointCP(coordType, a, b));
+    return (new PointCP3(coordType, a, b));
   }
 }
